@@ -1,0 +1,39 @@
+{
+  "name": "doan_ck_nodejs_banvemaybay",
+  "version": "1.0.0",
+  "description": "web_banvemaybay_nodejs",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "nodemon --no-deprecation app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.6.8",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-flash": "^0.0.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "moment-timezone": "^0.5.43",
+    "mongoose": "^7.5.0",
+    "mongoose-sequence": "^6.0.1",
+    "multer": "^2.0.2",
+    "nodemailer": "^6.10.1",
+    "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-local": "^1.0.0",
+    "php-express": "^0.0.3",
+    "socket.io": "^4.8.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
