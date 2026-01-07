@@ -1,0 +1,112 @@
+<div class="container-fluid"
+    style="padding: 100px;width: 100%;object-fit: cover;background: url(./img/background-images-personal.jpg) no-repeat;">
+    <div class="container-fluid mt-5">
+        <form action="payment-booking" method="POST" class="needs-validation">
+
+            <!-- <input type="hidden" name="newUserID" value="// echo  $_SESSION['newUserID'] ?>"> -->
+
+            <div class="row mb-5">
+                <h1 class="text-center" style="color: #fff;">XÁC NHẬN LẠI THÔNG TIN CÁ NHÂN</h1>
+            </div>
+            <div class="row  p-5"
+                style="background: #fff;box-shadow: 0px 4px 16px rgba(17, 34, 17, 0.05);border-radius: 12px;">
+                <!-- Row 1 -->
+                <div class="row">
+                    <!-- <div class="col-lg-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control border-dark" id="name-tc" required>
+                                <label for="name-tc">Tên</label>
+                            </div>
+                        </div> -->
+                    <!-- <div class="col-lg-3">
+                            <button type="submit" id="toggle" name="button" class="btn btn-outline-success p-3 fw-bold" style="background-color:#8DD3BB; border: #8DD3BB; color: black;width: 100%;">Tìm kiếm</button>
+                        </div> -->
+                </div>
+                <!-- Row for seat -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control border-dark" id="seat" name="seat"
+                                value="{{passengerInfo.seatNo}}" disabled>
+                            <label for="num-tc">Chỗ ngồi</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control border-dark" id="firstName" name="firstName"
+                                value="{{passengerInfo.firstName}}">
+                            <label for="num-tc">Họ</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control border-dark" id="lastName" name="lastName"
+                                value="{{passengerInfo.lastName}}">
+                            <label for="num-tc">Tên</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 3 -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control border-dark" id="num-tc" name="phoneNumber"
+                                value="{{passengerInfo.phoneNumber}}">
+                            <label for="num-tc">SĐT</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 4 -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control border-dark" id="num-tc" name="email"
+                                value="{{passengerInfo.email}}">
+                            <label for="num-tc">Email</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 5 -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="date" class="form-control border-dark" id="Dob" name="Dob" placeholder=""
+                                value="{{passengerInfo.Dob}}">
+                            <label for="Dob">Ngày sinh</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 6 -->
+                <div class="row mt-4">
+                    <!-- col 1 -->
+                    <div class="col">
+                        <div class="form-floating">
+                            <button class="btn btn-outline-success p-2"
+                                style="background-color:#8DD3BB; border: #8DD3BB; color: black;width: 100%;">
+                                <a class="d-inline-block text-decoration-none text-black"
+                                    style="width:100%; height:100%" href="../flight-flow/flight-detail-page.php">Quay
+                                    lại</a>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- col 2 -->
+                    <div class="col">
+                        <div class="form-floating">
+                            <!-- <form action="../booking-dt/booking-dt.php" method="POST"> -->
+                            <button type="submit" name="" id="" class="btn btn-outline-success p-2"
+                                style="background-color:#8DD3BB; border: #8DD3BB; color: black;width: 100%;">Xác
+                                nhận</button>
+                            <!-- </form> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{!-- Data value --}}
+            <input type="hidden" name="passengerInfo" value="{{JSONStringify passengerInfo}}">
+            <input type="hidden" name="flightData" value="{{JSONStringify flightData}}">
+        </form>
+    </div>
+</div>

@@ -1,0 +1,197 @@
+<style>
+    body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+    .admin-chat-layout { display: flex; height: 75vh; background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+    .user-sidebar { width: 300px; border-right: 1px solid #eee; display: flex; flex-direction: column; background: #f9f9f9; }
+    .sidebar-header { padding: 15px; background: #fff; font-weight: bold; border-bottom: 1px solid #eee; font-size: 1.1em; }
+    
+    #active-user-list { overflow-y: auto; flex: 1; }
+    .user-item { padding: 15px; cursor: pointer; border-bottom: 1px solid #f1f1f1; transition: 0.2s; display: flex; align-items: center; }
+    .user-item:hover { background: #eef2ff; }
+    .user-item.active { background: #e0e7ff; border-left: 4px solid #3867ff; }
+
+    .chat-viewport { flex: 1; display: flex; flex-direction: column; background: #fff; }
+    #current-user-info { padding: 15px; border-bottom: 1px solid #eee; font-weight: 600; background: #fff; }
+    
+    /* Vùng chứa tin nhắn */
+    #admin-message-container { 
+        flex: 1; padding: 20px; overflow-y: auto; 
+        background: #f4f7f6; display: flex; flex-direction: column; gap: 12px; 
+    }
+
+    /* Style Bong bóng chat */
+    .msg-bubble {
+        max-width: 70%;
+        padding: 10px 15px;
+        border-radius: 18px;
+        font-size: 14px;
+        line-height: 1.4;
+        position: relative;
+        word-wrap: break-word;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* Tin nhắn Admin (Bên phải - Màu xanh) */
+    .msg-right {
+        align-self: flex-end;
+        background-color: #3867ff;
+        color: white;
+        border-bottom-right-radius: 2px;
+    }
+
+    /* Tin nhắn Khách hàng (Bên trái - Màu trắng) */
+    .msg-left {
+        align-self: flex-start;
+        background-color: #ffffff;
+        color: #333;
+        border-bottom-left-radius: 2px;
+    }
+
+    .admin-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; background: #fff; }
+    #admin-chat-input { flex: 1; border: 1px solid #ddd; border-radius: 20px; padding: 10px 20px; outline: none; }
+    #admin-chat-input:focus { border-color: #3867ff; }
+    #admin-send-btn { background: #3867ff; color: white; border: none; padding: 0 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+    #admin-send-btn:disabled { background: #ccc; cursor: not-allowed; }
+</style>
+
+
+<div class="admin-chat-layout">
+    <div class="user-sidebar">
+        <div class="sidebar-header">Khách hàng hỗ trợ</div>
+        <div id="active-user-list">
+            {{#each users}}
+            <div class="user-item" id="user-{{this._id}}" onclick="selectUser('{{this._id}}', '{{this.email}}')">
+                <div class="user-info">
+                    <strong class="user-email" style="display: block; color: #333;">{{this.email}}</strong>
+                    <div class="last-msg" id="last-msg-{{this._id}}">{{this.lastMessage}}</div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="chat-viewport">
+        <div id="current-user-info">Chọn một khách hàng để bắt đầu</div>
+        <div id="admin-message-container">
+            </div>
+        <div class="admin-input-area">
+            <input type="text" id="admin-chat-input" placeholder="Trả lời khách hàng..." disabled>
+            <button onclick="sendAdminReply()" id="admin-send-btn">Gửi</button>
+        </div>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    let currentChattingUser = null;
+
+    // --- 1. LẮNG NGHE TIN NHẮN REAL-TIME (CẬP NHẬT SIDEBAR & VIEWPORT) ---
+    socket.on('admin_receive_new_message', (data) => {
+    const userList = document.getElementById('active-user-list');
+    let existingUser = document.getElementById(`user-${data.userId}`);
+
+    if (!existingUser) {
+        // Nếu là khách hàng mới nhắn lần đầu (chưa có trong sidebar)
+        const userHtml = `
+            <div class="user-item" id="user-${data.userId}" onclick="selectUser('${data.userId}', '${data.userEmail}')">
+                <div class="user-info">
+                    <strong class="user-email" style="display: block; color: #333;">${data.userEmail}</strong>
+                    <div class="last-msg" id="last-msg-${data.userId}" style="color: #3867ff; font-weight: bold;">
+                        ${data.content}
+                    </div>
+                </div>
+            </div>`;
+        userList.insertAdjacentHTML('afterbegin', userHtml);
+    } else {
+        // CẬP NHẬT: Tìm thẻ tin nhắn cuối bằng ID cụ thể
+        const lastMsgDiv = document.getElementById(`last-msg-${data.userId}`);
+        if (lastMsgDiv) {
+            lastMsgDiv.innerText = data.content; 
+            lastMsgDiv.style.color = "#3867ff";
+            lastMsgDiv.style.fontWeight = "bold";
+        }
+        
+        // Đẩy khách hàng vừa có hoạt động lên đầu danh sách Sidebar
+        userList.prepend(existingUser);
+    }
+
+    // Nếu Admin đang mở chat với đúng người này, hiện tin nhắn vào khung chat
+    if (currentChattingUser === data.userId && data.sender !== 'admin') {
+        appendMessageToAdminUI('user', data.content);
+    }
+});
+    // --- 2. LẮNG NGHE LỊCH SỬ TIN NHẮN (Khi nhấn chọn khách hàng) ---
+    socket.on('load_history', (history) => {
+        const container = document.getElementById('admin-message-container');
+        container.innerHTML = ''; // Xóa trắng tin nhắn cũ
+        if (history && history.length > 0) {
+            history.forEach(msg => {
+                appendMessageToAdminUI(msg.sender, msg.content);
+            });
+        }
+    });
+
+    // --- 3. CHỌN NGƯỜI DÙNG ĐỂ CHAT ---
+    function selectUser(userId, userName) {
+        currentChattingUser = userId;
+        
+        // Cập nhật giao diện tiêu đề
+        document.getElementById('current-user-info').innerText = `Đang hỗ trợ: ${userName}`;
+        
+        // Kích hoạt ô nhập liệu
+        const inputField = document.getElementById('admin-chat-input');
+        inputField.disabled = false;
+        inputField.placeholder = `Trả lời ${userName}...`;
+        inputField.focus();
+
+        // Đổi màu nền (Active) trong sidebar
+        document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active'));
+        const activeItem = document.getElementById(`user-${userId}`);
+        if(activeItem) activeItem.classList.add('active');
+
+        // Gửi yêu cầu lấy lịch sử lên Server
+        socket.emit('join_chat', userId);
+    }
+
+    // --- 4. GỬI PHẢN HỒI ---
+    function sendAdminReply() {
+        const input = document.getElementById('admin-chat-input');
+        const content = input.value.trim();
+        
+        if (content && currentChattingUser) {
+            socket.emit('admin_send_message', { 
+                userId: currentChattingUser, 
+                content: content 
+            });
+            
+            // Hiện tin nhắn Admin vừa gõ vào khung chat
+            appendMessageToAdminUI('admin', content);
+            input.value = '';
+        }
+    }
+
+    // --- 5. HÀM VẼ BONG BÓNG CHAT ---
+    function appendMessageToAdminUI(sender, content) {
+        const container = document.getElementById('admin-message-container');
+        if (!container) return;
+
+        const div = document.createElement('div');
+        div.className = `msg-bubble ${sender === 'admin' ? 'msg-right' : 'msg-left'}`;
+        div.innerText = content;
+        
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight; // Cuộn xuống cuối
+    }
+
+    // Gửi bằng phím Enter
+    document.getElementById('admin-chat-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') sendAdminReply();
+    });
+</script>

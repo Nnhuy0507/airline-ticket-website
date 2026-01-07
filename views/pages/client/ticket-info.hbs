@@ -1,0 +1,221 @@
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
+body{
+    background: linear-gradient(
+        rgba(255,255,255,0.88),
+        rgba(255,255,255,0.88)
+    ),
+    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* ===== HEADER ===== */
+.page-title{
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* ===== TICKET ===== */
+#ticket-plane{
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    overflow:hidden;
+}
+
+/* LEFT TIME COLUMN */
+.ticket-time{
+    background:#EBF6F2;
+    height:100%;
+}
+
+/* RIGHT CONTENT */
+.ticket-main{
+    background:#8DD3BB;
+    color:#000;
+}
+
+/* PASSENGER BAR */
+.passenger-bar{
+    background:rgba(255,255,255,0.25);
+    border-radius:14px;
+}
+
+/* INFO ICON BOX */
+.info-box img{
+    width:26px;
+}
+
+/* QR */
+.qr-box img{
+    width:90px;
+}
+
+/* DOWNLOAD BUTTON */
+.btn-download button{
+    border-radius:30px;
+    font-weight:700;
+    padding:8px 18px;
+}
+
+/* TERMS */
+.terms{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.1);
+}
+</style>
+
+<main class="pt-5 mt-5">
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h2 class="page-title">
+                {{flightData.airlineInfo.airline_name}} ✈️ Airbus A{{flightData.flight_id}}
+            </h2>
+            <p class="text-muted mb-0">
+                <i class="fa-solid fa-plane-departure me-1"></i>
+                {{flightData.departure_airport_id.airport_location}}
+                ({{flightData.departure_airport_id.airport_name}})
+                <br>
+                <i class="fa-solid fa-arrow-down-long my-1"></i>
+                <br>
+                <i class="fa-solid fa-plane-arrival me-1"></i>
+                {{flightData.arrival_airport_id.airport_location}}
+                ({{flightData.arrival_airport_id.airport_name}})
+            </p>
+
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="btn-download" id="download-tc">
+                <button class="btn btn-success">
+                    <i class="fa fa-download"></i> Download vé
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TICKET -->
+    <div id="ticket-plane">
+
+        <div class="row g-0">
+
+            <!-- LEFT -->
+            <div class="col-lg-3 p-4 ticket-time text-center">
+                <div class="mb-4">
+                    <div class="fs-2 fw-bold">
+                        {{splitString flightData.departure_datetime " " 1}}
+                    </div>
+                    <div>{{flightData.from.airport_location}}</div>
+                </div>
+
+                <img src="/img/ticket_info/arrow-bottom.svg" width="50">
+
+                <div class="mt-4">
+<div class="fs-2 fw-bold">
+                        {{splitString flightData.arrival_datetime " " 1}}
+                    </div>
+                    <div>{{flightData.to.airport_location}}</div>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-lg-9 p-4 ticket-main">
+
+                <!-- PASSENGER -->
+                <div class="row passenger-bar p-3 mb-4 align-items-center">
+                    <div class="col-md-8">
+                        <h4 class="fw-bold mb-0">
+                            {{#if passengerInfo}}
+                                {{passengerInfo.firstName}} {{passengerInfo.lastName}}
+                            {{else}}
+                                {{user.first_name}} {{user.last_name}}
+                            {{/if}}
+                        </h4>
+                        <small>Boarding Pass</small>
+                    </div>
+                    <div class="col-md-4 text-end fw-bold">
+                        {{flightData.classValue}}
+                    </div>
+                </div>
+
+                <!-- INFO -->
+                <div class="row text-dark bg-white rounded-4 p-3">
+
+                    <div class="col-md-3 info-box">
+                    <img src="/img/ticket_info/date.png" />
+                    <div class="fw-bold">Date</div>
+                    <div>{{flightData.departureDate}}</div>
+                    </div>
+
+                    <div class="col-md-3 info-box">
+                    <img src="/img/ticket_info/time.png" />
+                    <div class="fw-bold">Time</div>
+                    <div>{{flightData.departureTime}}</div>
+                    </div>
+
+                    <div class="col-md-3 info-box">
+                    <img src="/img/ticket_info/gate.png" />
+                    <div class="fw-bold">Gate</div>
+                    <div>A{{flightData.flight_id}}</div>
+                    </div>
+
+                    <div class="col-md-3 info-box">
+                        <img src="/img/ticket_info/seat.png">
+                        <div class="fw-bold">Seat</div>
+                        <div>
+                        <div>{{flightData.seatNo}}</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FOOTER -->
+                <div class="row mt-4 align-items-center">
+                    <div class="col-md-6">
+                        <h5 class="fw-bold">Mã vé: {{ticket._id}}</h5>
+                        <small>{{flightData.airlineInfo.airline_name}} Airbus</small>
+                    </div>
+                    <div class="col-md-6 text-end qr-box">
+                        <img src="/img/ticket_info/maQR.svg">
+                    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="terms mt-5 p-4">
+        <h4>📜 Điều khoản & Điều kiện</h4>
+        <ul class="mt-3">
+            <li>Thanh toán qua cổng an toàn, có kiểm tra gian lận.</li>
+            <li>Thông tin sai có thể khiến vé bị hủy.</li>
+            <li>Golobe có quyền yêu cầu xác minh thanh toán.</li>
+        </ul>
+
+        <h5 class="mt-4">📞 Liên hệ</h5>
+        <p>Email: <b>StarLine@gmail.com</b></p>
+    </div>
+
+</div>
+</main>
+
+<script>
+document.getElementById("download-tc").addEventListener("click", async () => {
+    const ticketElement = document.getElementById("ticket-plane");
+
+    html2canvas(ticketElement).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "ticket.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+});
+</script>

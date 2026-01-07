@@ -1,0 +1,10 @@
+
+[
+{"user_id": 1,"email":"ngvhao172@gmail.com","last_name":"Nguyễn","first_name":"Hào","password":"6c578ac082c7058f1abe078da26cde4e","google_id":"104133343499308040989","code":"0","phonenumber":"0354434737","address":"Huế","dob":null,"role":"0"},
+{"user_id": 2,"email":"ngvhao182@gmail.com","last_name":"Nguyễn Văn","first_name":"Hào","password":"c4ca4238a0b923820dcc509a6f75849b","google_id":null,"code":"0","phonenumber":"0123544789","address":null,"dob":null,"role":"0"},
+{"user_id": 3,"email":"ngvhao127@gmail.com","last_name":"Nguyễn Văn","first_name":"Hào","password":"c4ca4238a0b923820dcc509a6f75849b","google_id":null,"code":"0","phonenumber":"0132645861","address":null,"dob":null,"role":"0"},
+{"user_id": 4,"email":"","last_name":"Hào","first_name":"Nguyễn Văn","password":"$2y$10$E3PYHFJWC6fuyqIzOoF0oOj2IkkAKhrGVw2MC4YbBmBXAH\/Z8xFvW","google_id":null,"code":"0","phonenumber":"123154654","address":"Huế","dob":"2023-04-23","role":"0"},
+{"user_id": 5,"email":"","last_name":"H","first_name":"Nguyễn Văn","password":"$2y$10$wsJtYy6eVEVIpf8aL5zoDu1eCZG3lYh7D7YblAo3GOi8God4SbC9e","google_id":null,"code":"0","phonenumber":"123154654","address":"Huế","dob":"2023-04-20","role":"0"},
+{"user_id": 6,"email":"","last_name":"Văn Hào","first_name":"Nguyễn","password":"$2y$10$0Wiw\/9vScrrBbtpiaIvuhOehTV9I3qgitCKNIzGJ.t2.lgJk2O1CS","google_id":null,"code":"0","phonenumber":"0354434737","address":"Huế","dob":"2023-09-16","role":"0"}
+]
+

@@ -1,0 +1,220 @@
+<style>
+    body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+.title-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+</style>
+<div>
+  <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="d-flex justify-content-center align-items-center py-3">
+      <div class="title-glass px-4 py-2 rounded-4 shadow-sm">
+        <h5 class="mb-0 text-uppercase fw-semibold text-primary">
+          ✈️ Danh Sách Vé Máy Bay
+        </h5>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col">
+      <div class="card border-primary border-bottom border-3 border-0">
+        <div class="card-header">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Điểm khởi hành</th>
+                    <th class="text-center">Điểm đến</th>
+                    <th class="text-center">Thời gian khởi hành</th>
+                    <th class="text-center">Thời gian đến</th>
+                    <th class="text-center">Hãng bay</th>
+                    <th class="text-center">Loại vé</th>
+                    <th class="text-center">Giá vé</th>
+                    <th class="text-center">Ghế</th>
+                    <th class="text-center">Khách hàng</th>
+                    <th class="text-center">Action</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Xác nhận</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each tickets}}
+                        <tr class="align-middle">
+                          <td class="text-center">{{incremented @index}}</td>
+                          <td> {{flight_id.departure_airport_id.airport_name}}</td>
+                          <td> {{flight_id.arrival_airport_id.airport_name}}</td>
+                          <td class="text-center"> {{format_datetime flight_id.departure_datetime}}</td>
+                          <td class="text-center"> {{format_datetime flight_id.arrival_datetime}}</td>
+                          <td class="text-center"> {{airline_id.airline_name}}</td>
+                          <td class="text-center"> {{ticket_class}}</td>
+
+                          {{#ifCond ticket_class '===' 'Phổ Thông'}}
+                              <td class="text-center"> {{format_currency flight_id.economy_price}} VNĐ</td>
+                          {{else}}
+<td class="text-center"> {{format_currency flight_id.business_price}} VNĐ</td>
+                          {{/ifCond}}
+                          <td class="text-center"> {{seat}}</td>
+                          {{#if passenger_info}}
+                              <td class="text-center">
+                                {{#with (convertMap passenger_info)}}
+                                    <button data-bs-toggle="modal" data-bs-target=".informationModal" type="button" 
+                                    data-name="{{firstName}} {{lastName}}" 
+                                    data-email="{{email}}" 
+                                    data-phone="{{phoneNumber}}" data-dob="{{Dob}}"
+                                    class="btn btn-info userInfo">Chi tiết</button>
+                                {{/with}}
+                              </td>
+                          {{else}}
+                              <td class="text-center">
+                                <button data-bs-toggle="modal" data-bs-target=".informationModal" type="button" 
+                                data-name="{{user_id.last_name}} {{user_id.first_name}}" 
+                                data-email="{{user_id.email}}" 
+                                data-phone="{{user_id.phonenumber}}" data-dob="{{user_id.dob}}" class="btn btn-info userInfo">Chi tiết</button>
+                              </td>
+                          {{/if}}
+                          <td class="text-center">
+                            <button data-bs-toggle="modal" data-bs-target=".deleteModal" data-id="{{_id}}" class="del btn btn-danger deleteTicket"><i class="fa-solid fa-trash" style="margin-left: 5px;"></i></button>
+                          </td>
+                          <td class="text-center">
+                              {{#ifCond status '===' 'paid'}}
+                                  <span class="badge bg-success">Đã thanh toán</span>
+                              {{else}}
+                                  <span class="badge bg-warning text-dark">Chưa thanh toán</span>
+                              {{/ifCond}}
+                          </td>
+
+                          <td class="text-center">
+                              {{#ifCond status '===' 'paid'}}
+                                  <button disabled class="btn btn-secondary">Đã xác nhận</button>
+                              {{else}}
+                                  <button class="btn btn-success confirm-btn" data-id="{{_id}}">
+                                      Xác nhận
+                                  </button>
+                              {{/ifCond}}
+                          </td>
+                                                  </tr>
+                  {{/each}}
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="modal fade deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa Vé</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="alert alert-warning border-0 bg-warning alert-dismissible fade show py-2">
+                      <div class="d-flex align-items-center">
+                        <div class="font-35 text-dark"><i class="bx bx-info-circle"></i></div>
+                        <div class="ms-3">
+                          <h6 class="mb-0 text-dark">CẢNH BÁO</h6>
+                          <input type="hidden" id="_id">
+                          <div class="text-dark text-wrap">Bạn có chắc chắn muốn xóa vé này?
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmDelete" data-bs-dismiss="modal">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{! a }}
+            <div class="modal fade informationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Flight Information</h1>
+                    <button
+                      type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="alert alert-warning border-0 bg-warning alert-dismissible fade show py-2">
+                      <label><b>Họ và tên</b></label>
+                      <p id="name"></p>
+                      <label><b>Email</b></label>
+                      <p id="email"></p>
+                      <label><b>Số điện thoại</b></label>
+                      <p id="phone"></p>
+                      <label><b>Ngày sinh</b></label>
+                      <p id="dob"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{#section 'js'}}
+<script src="../js/manage-tickets.js"></script>
+{{/section}}
+{{!-- <script>
+
+  document.querySelectorAll(".confirm-btn").forEach(btn => {
+
+    btn.addEventListener("click", async function () {
+
+        const ticketId = this.dataset.id;
+const res = await fetch("/admin/confirm", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ ticketId })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert("✔ Vé đã được xác nhận!");
+            location.reload();
+        }
+    });
+
+});
+
+</script> --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".confirm-btn").forEach(btn => {
+        btn.addEventListener("click", async function () {
+            const ticketId = this.dataset.id;
+
+            const res = await fetch("/admin/confirm", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ticketId })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                location.reload(); // reload trang -> hiện ĐÃ XÁC NHẬN
+            }
+        });
+    });
+});
+</script>

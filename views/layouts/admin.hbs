@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	{{> admin/css }}
+</head>
+
+<body>
+	<!--wrapper-->
+	<div class="wrapper">
+	 <!--start header wrapper-->	
+	  <div class="header-wrapper">
+		{{> admin/header }}
+		{{> admin/menu }}
+	   </div>
+	   <!--end header wrapper-->
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+            <div class="page-content">
+		    	{{{ body }}}
+            </div>
+		</div>
+		<!--end page wrapper -->
+		<!--start overlay-->
+		<div class="overlay toggle-icon"></div>
+		<!--end overlay-->
+		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+		<!--End Back To Top Button-->
+		{{> admin/footer }}
+	</div>
+	<!--end wrapper-->
+	{{> admin/theme_setting}}
+	{{> admin/js }}
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	{{{_sections.js}}}
+</body>
+
+</html>

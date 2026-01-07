@@ -1,0 +1,184 @@
+<style>
+    body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+</style>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body p-5">
+                <div class="card-title d-flex align-items-center">
+                    <div><i class="bx bxs-user me-1 font-22 text-primary"></i>
+                    </div>
+                    <h5 class="mb-0 text-primary">Quản Lý Chuyến Bay</h5>
+                </div>
+                <hr>
+                <form class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Điểm khởi hành</label>
+                        <select id="departure_airport_id" class="form-select">
+                            <option selected>Chọn sân bay</option>
+                            {{#each airports}}
+                            <option value={{_id}}>{{airport_location}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Điểm đến</label>
+                        <select id="arrival_airport_id" class="form-select">
+                            <option selected>Chọn sân bay</option>
+                            {{#each airports}}
+                            <option value={{_id}}>{{airport_location}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Hãng bay</label>
+                        <select id="airline_id" class="form-select">
+                            <option selected>Chọn hãng bay</option>
+                            {{#each airlines}}
+                                <option value={{_id}}>{{airline_name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Thời gian khởi hành</label>
+                        <input id="departure_datetime" type="datetime-local" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Thời gian đến</label>
+                        <input id="arrival_datetime" type="datetime-local" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Giá vé hạng phổ thông</label>
+                        <input id="economy_price" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Giá vé hạng thương gia</label>
+                        <input id="business_price" type="text" class="form-control">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="button" id="createFlight" class="btn btn-primary px-5">Xác nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>     
+    </div>
+    <div class="col-md-7">
+        <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-center">
+                    <h5 class="mb-0 text-primary">Quản Lý Chuyến Bay</h5>
+                </div>
+                <div class="table table-responsive">
+                    <table class="table mb-0 table-hover">
+                        <thead>
+                            <tr class="text-center text-nowrap">
+                                <th scope="col" >#</th>
+                                <th scope="col">Điểm khởi hành</th>
+                                <th scope="col">Điểm đến</th>
+                                <th scope="col">Hãng bay</th>
+                                <th scope="col">Thời gian khởi hành</th>
+                                <th scope="col">Thời gian đến</th>
+                                <th scope="col">Giá vé hạng Phổ Thông</th>
+                                <th scope="col">Giá vé hạng Thương Gia</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each flights}}
+                            <tr class="text-nowrap">
+                                <th>{{incremented @index}}</th>
+                                <td>{{departure_airport_id.airport_name}}</td>
+                                <td>{{arrival_airport_id.airport_name}}</td>
+                                <td>{{airline_id.airline_name}}</td>
+                                <td>{{format_datetime departure_datetime}}</td>
+                                <td>{{format_datetime arrival_datetime}}</td>
+                                <td class="text-center">{{format_currency economy_price}} VNĐ</td>
+                                <td class="text-center">{{format_currency business_price}} VNĐ</td>
+                                <td class="text-nowrap text-center">
+                                    <button type="button" class="btn btn-primary px-5 updateFlight" data-id="{{_id}}" data-bs-toggle="modal" data-bs-target=".updateModal">Sửa</button>
+                                    <button type="button" class="btn btn-danger px-5 ml-3 deleteFlight" data-id="{{_id}}">Xóa</button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade updateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa thông tin chuyến bay</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3">
+                    <input type="hidden" id="_id">
+                    <div class="col-md-12">
+                        <label class="form-label">Điểm khởi hành</label>
+                        <select id="departure_airport_id_update" class="form-select">
+                            <option>Chọn sân bay</option>
+                            {{#each airports}}
+                            <option value={{_id}}>{{airport_location}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Điểm đến</label>
+                        <select id="arrival_airport_id_update" class="form-select">
+                            <option>Chọn sân bay</option>
+                            {{#each airports}}
+                            <option value={{_id}}>{{airport_location}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Hãng bay</label>
+                        <select id="airline_id_update" class="form-select">
+                            <option>Chọn hãng bay</option>
+                            {{#each airlines}}
+                                <option value={{_id}}>{{airline_name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Thời gian khởi hành</label>
+                        <input id="departure_datetime_update" type="datetime-local" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Thời gian đến</label>
+                        <input id="arrival_datetime_update" type="datetime-local" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Giá vé hạng phổ thông</label>
+                        <input id="economy_price_update" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Giá vé hạng thương gia</label>
+                        <input id="business_price_update" type="text" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="confirmUpdate">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{#section 'js'}}
+<script src="../js/manage-flights.js"></script>
+{{/section}}
+

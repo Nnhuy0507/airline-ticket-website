@@ -1,0 +1,85 @@
+<style>
+body {
+    margin: 0;
+    padding-top: 90px;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}.table-scroll {
+    max-height: 600px;       /* ~5 dòng */
+    overflow-y: auto;
+}
+
+/* Giữ header cố định khi cuộn */
+.table-scroll thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Thanh cuộn đẹp hơn */
+.table-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background-color: #0d6efd;
+    border-radius: 6px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+</style>
+<div class="container" style="margin-top: 20px;">
+<div class="card border-top border-0 border-5 border-primary">
+<div class="card-body">
+
+    <div class="card-title d-flex align-items-center">
+        <h5 class="mb-0 text-primary">DANH SÁCH VÉ MÁY BAY</h5>
+        </div>
+        <div class="table-scroll">
+            <table class="table mb-0 table-hover table-borderless">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Điểm khởi hành</th>
+                        <th class="text-center">Điểm đến</th>
+                        <th class="text-center">Thời gian khởi hành</th>
+                        <th class="text-center">Thời gian đến</th>
+                        <th class="text-center">Hãng bay</th>
+                        <th class="text-center">Loại vé</th>
+                        <th class="text-center">Ghế</th>
+                        <th class="text-center">Giá vé</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each ticket_list}}
+                    <tr>
+                        <th>{{incremented @index}}</th>
+                        <td>{{flight_id.departure_airport_id.airport_name}}</td>
+                        <td>{{flight_id.arrival_airport_id.airport_name}}</td>
+                        <td class="text-center">{{format_datetime flight_id.departure_datetime}}</td>
+                        <td class="text-center">{{format_datetime flight_id.arrival_datetime}}</td>
+                        <td class="text-center">{{airline_id.airline_name}}</td>
+                        <td class="text-center">{{ticket_class}}</td>
+                        <td class="text-center">{{seat}}</td>
+                        {{#ifCond ticket_class '===' 'Phổ Thông'}}
+                            <td class="text-center">{{format_currency flight_id.economy_price}} VNĐ</td>
+                        {{else}}
+                            <td class="text-center">{{format_currency flight_id.business_price}} VNĐ</td>
+{{/ifCond}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+         </div>
+    </div>
+</div>
+</div>

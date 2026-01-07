@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "51908cc42f9fa364220cb649"
+  },
+  "airline_name": "Vietnam Airlines",
+  "airline_logo": "./img/airlines/VietnamAirlinesLogo.png",
+  "airline_id": 1
+},
+{
+  "_id": {
+    "$oid": "d83aa0756732d975dffbc109"
+  },
+  "airline_name": "Jetstar Pacific",
+  "airline_logo": "./img/airlines/JetStarLogo.png",
+  "airline_id": 2
+},
+{
+  "_id": {
+    "$oid": "9f094d248b12325fa7743f29"
+  },
+  "airline_name": "VietJet Air",
+  "airline_logo": "./img/airlines/VietjetAirLogo.png",
+  "airline_id": 3
+},
+{
+  "_id": {
+    "$oid": "582857409a28e0e18829e880"
+  },
+  "airline_name": "Bamboo Airways",
+  "airline_logo": "./img/airlines/BambooAirwaysLogo.png",
+  "airline_id": 4
+},
+{
+  "_id": {
+    "$oid": "10ae183c37e61e4ebf7b84a3"
+  },
+  "airline_name": "Pacific Airlines",
+  "airline_logo": "./img/airlines/PacificAirlinesLogo.png",
+  "airline_id": 5
+}]

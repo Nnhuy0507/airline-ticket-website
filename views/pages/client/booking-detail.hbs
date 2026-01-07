@@ -1,0 +1,233 @@
+<style>
+body {
+    margin: 0;
+    padding-top: 90px;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background:
+        linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)),
+        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* =================== CARD =================== */
+.card-box {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+}
+
+/* =================== TITLE =================== */
+.section-title {
+    font-weight: 700;
+    border-left: 5px solid #8DD3BB;
+    padding-left: 12px;
+    margin-bottom: 20px;
+}
+
+/* =================== PRICE =================== */
+.total-price {
+    background: linear-gradient(90deg, #8DD3BB, #cdefff);
+    color: #000;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+/* =================== QR =================== */
+.qr-box {
+    border: 1px dashed #ccc;
+    border-radius: 14px;
+    padding: 24px;
+}
+
+#qr-image {
+    width: 280px;
+    border-radius: 14px;
+    padding: 12px;
+    background: #fff;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* =================== BUTTON =================== */
+.btn-qr {
+    background: linear-gradient(90deg, #ffeb3b, #ffc107);
+    font-weight: 700;
+    border-radius: 40px;
+    padding: 12px;
+    transition: 0.3s;
+}
+
+.btn-qr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255,193,7,0.6);
+}
+</style>
+
+<div class="container-fluid mt-5">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- ================= LEFT ================= -->
+      <div class="col-lg-8 col-sm-12">
+        <div class="card-box p-4">
+
+          <h3 class="section-title">🎫 Thông tin vé</h3>
+
+          <div class="text-center mb-4">
+            <img src="{{flightData.airlineInfo.airline_logo}}" style="width:120px">
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="fw-bold">Mã chuyến bay</label>
+              <p>{{flightData._id}}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label class="fw-bold">Mã vé</label>
+              <p>{{ticket._id}}</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label class="fw-bold">Mã người dùng</label>
+              <p>{{user._id}}</p>
+            </div>
+          </div>
+
+          <div class="total-price p-4 mt-4">
+            <h4 class="m-0">💰 Tổng tiền: {{totalPrice}}</h4>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= RIGHT ================= -->
+      <div class="col-lg-4 col-sm-12">
+        <div class="card-box p-4">
+
+          <div class="d-flex align-items-center mb-4">
+            <img src="/img/ticket_info/ticket.svg" width="70">
+<div class="ms-3">
+              <span class="text-muted">{{flightData.class}}</span>
+              <p class="fw-bold m-0">
+                {{flightData.airlineInfo.airline_name}}<br>
+                Airbus A{{flightData.flight_id}}
+              </p>
+            </div>
+          </div>
+
+          <div class="qr-box text-center">
+            <h5 class="fw-bold mb-3">📱 Quét QR thanh toán MoMo</h5>
+
+            <img id="qr-image" style="display:none; margin:auto;">
+
+            <p class="mt-3 text-muted" style="font-size:14px;">
+              Mở ứng dụng MoMo để quét mã
+            </p>
+
+            <div class="form-check mt-3">
+              <input class="form-check-input" id="confirm-checkbox" type="checkbox">
+              <label class="form-check-label">
+                Tôi đã chuyển khoản xong
+              </label>
+            </div>
+
+            <button type="button"
+                    onclick="showQR()"
+                    id="pay-button"
+                    class="btn btn-qr w-100 mt-4">
+              Hiển thị mã QR
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+async function showQR() {
+    try {
+        const amount = {{totalPrice}};
+
+        const res = await fetch("/payment/momo-qr", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount })
+        });
+
+        const data = await res.json();
+
+        if (data.qrCodeUrl) {
+            const qrImgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
+                             + encodeURIComponent(data.qrCodeUrl);
+
+            document.getElementById("qr-image").src = qrImgUrl;
+            document.getElementById("qr-image").style.display = "block";
+        } else {
+            alert("Không lấy được mã QR!");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Lỗi hệ thống!");
+    }
+}
+
+
+document.getElementById("confirm-checkbox").addEventListener("change", async function () {
+    if (!this.checked) return;
+
+    const ticketId = "{{ticket._id}}";
+
+    try {
+        const res = await fetch("/payment/pending", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ticketId })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert("⏳ Hệ thống đã ghi nhận yêu cầu. Vui lòng chờ admin xác nhận!");
+        } else {
+            alert("❌ Gửi yêu cầu thất bại!");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("⚠ Không thể kết nối server!");
+    }
+});
+
+
+// ==============================
+// ⚡ CHỈ GIỮ LẠI 1 ĐOẠN POLLING
+// ==============================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ticketId = "{{ticket._id}}";
+console.log("⏳ Bắt đầu kiểm tra trạng thái vé:", ticketId);
+
+    setInterval(async () => {
+        try {
+            const res = await fetch(`/payment/status/${ticketId}`);
+            const data = await res.json();
+
+            console.log("🔍 Trạng thái vé:", data.status);
+
+            if (data.status === "paid") {
+                alert("🎉 Thanh toán thành công!");
+                window.location.href = "/ticket-info/" + ticketId;
+            }
+        } catch (err) {
+            console.error("Lỗi gọi API trạng thái:", err);
+        }
+    }, 3000);
+});
+</script>

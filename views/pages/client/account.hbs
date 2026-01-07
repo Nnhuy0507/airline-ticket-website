@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+/* =====================
+   VARIABLES
+===================== */
+:root {
+    --primary-color: #3ca375;
+    --secondary-color: #5bc697;
+    --background-page: #f9f9f9;
+    --border-color: #e0e0e0;
+}
+
+/* =====================
+   BODY & BACKGROUND
+===================== */
+body {
+    margin: 0;
+    padding-top: 90px;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* =====================
+   PAGE CONTROL
+===================== */
+.page-content {
+    display: none;
+}
+.page-content.active {
+    display: block;
+}
+
+/* =====================
+   MAIN WRAPPER
+===================== */
+.account-page-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* =====================
+   CARD COMMON STYLE
+===================== */
+.profile-card,
+.menu-list,
+.profile-detail-card {
+    background: rgba(255,255,255,0.96);
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+}
+
+/* =====================
+   PROFILE CARD
+===================== */
+.profile-card {
+    padding: 15px;
+    text-align: center;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.avatar {
+    margin-right: 15px;
+}
+
+.avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-details {
+    text-align: left;
+}
+
+.user-details .name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.user-details .login-status {
+    font-size: 14px;
+    color: #8e8e93;
+}
+
+.btn-account {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* =====================
+   MENU LIST
+===================== */
+.menu-list {
+    overflow: hidden;
+}
+
+.list-item-account {
+    display: flex;
+    align-items: center;
+    padding: 15px 18px;
+    border-bottom: 1px solid #f2f2f7;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.list-item-account:last-child {
+    border-bottom: none;
+}
+
+.list-item-account:hover {
+    background: #f7f7f7;
+}
+.icon-left {
+    font-size: 18px;
+    margin-right: 15px;
+    color: var(--primary-color);
+}
+
+.item-text {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+.fa-chevron-right {
+    font-size: 12px;
+    color: #c7c7cc;
+}
+
+/* =====================
+   HEADER (SUB PAGES)
+===================== */
+.starline-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    background: rgba(91,198,151,0.95);
+    backdrop-filter: blur(6px);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.starline-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.starline-header i {
+    margin-right: 10px;
+}
+
+/* =====================
+   PROFILE DETAIL
+===================== */
+.profile-detail-card {
+    padding: 20px;
+}
+
+.profile-detail-card h3 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #666;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.btn-save,
+.btn-send {
+    background: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+}
+
+/* =====================
+   RATING
+===================== */
+.stars {
+    display: flex;
+    gap: 8px;
+}
+
+.star-item {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star-item.selected,
+.star-item:hover {
+    color: #ffc107;
+}
+
+.rating-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.rating-stars {
+    color: #ffc107;
+}
+
+.rating-text {
+    font-size: 14px;
+    color: #444;
+}
+
+/* =====================
+   FOOTER NAV
+===================== */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    border-top: 1px solid var(--border-color);
+    padding: 6px 0;
+    z-index: 20;
+}
+
+.nav-item {
+    font-size: 11px;
+    color: #8e8e93;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-item i {
+    font-size: 20px;
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 480px) {
+    body {
+        padding-top: 70px;
+    }
+    .account-page-wrapper {
+        padding: 10px;
+    }
+}
+/* CENTER avatar + name */
+.profile-info {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.avatar {
+    margin: 0 0 10px 0;
+}
+
+.avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-details .name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.user-details .login-status {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #8e8e93;
+}
+
+</style>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div>
+        <div id="accountPage" class="page-content active">
+            <div class="account-page-wrapper">
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="avatar">{{#if user.picture}}
+                    <img class="avt" src="{{user.picture}}" alt="User" style="height: 60px; width:60px; border-radius: 60px">
+                    {{else}}
+                         <img class="avt" src="/img/userlogo.png" alt="User" style="height: 50px; width:50px">
+                {{/if}}</div>
+                        <div class="user-details">
+                            <p class="name">{{user.last_name}} {{user.first_name}}</p>
+                            <p class="login-status">Đã đăng nhập</p>
+                        </div>
+                    </div>
+                    <button class="btn-account" onclick="ProfilePage.loadProfile('{{ user.email }}'); ProfilePage.show()">
+                        Xem hồ sơ chi tiết
+                    </button>
+                </div>
+                <div class="menu-list">
+                    {{!-- <div class="list-item-account">
+                        <i class="fas fa-list-alt icon-left" style="color: var(--primary-color);"></i>
+                        <span class="item-text">Tất cả đơn đặt</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div> --}}
+                    {{!-- <div class="list-item-account"href="/admin/chat-client" >
+                        <i class="fas fa-comments icon-left" style="color: var(--primary-color);"></i>
+                        <span class="item-text">Chăm sóc khách hàng</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div> --}}
+<form action="/logout" method="post" id="logoutForm" class="list-item-account" onclick="document.getElementById('logoutForm').submit()">
+                        <i class="fas fa-sign-out-alt icon-left" style="color: #ff3b30;"></i>
+                        <span class="item-text">Đăng xuất</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </form>
+                </div>
+                <div class="menu-list">
+                    <div class="list-item-account" onclick="showPage('aboutPage')">
+                        <i class="fas fa-info-circle icon-left"></i>
+                        <span class="item-text">Giới thiệu về Star Line</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+                    <div class="list-item-account" onclick="showPage('ratingPage')">
+                        <i class="fas fa-star icon-left" style="color: #ffc107;"></i>
+                        <span class="item-text">Đánh giá</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+
+
+                    <div class="list-item-account" onclick="showPage('termsPage')">
+                        <i class="fas fa-file-alt icon-left"></i>
+                        <span class="item-text">Điều khoản, điều kiện</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="profilePage" class="page-content">
+            <div class="starline-header">
+                <button onclick="showPage('accountPage')">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </button>
+            </div>
+            <div class="profile-detail-card">
+                <h3><i class="fas fa-user-edit"></i> Chỉnh sửa Thông tin</h3>
+                <input type="hidden" id="_id_update" value="{{ user._id }}">
+                <div class="input-group">
+                    <label for="last_name">Họ</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" >
+                </div>
+                <div class="input-group">
+                    <label for="first_name">Tên</label>
+<input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" >
+                </div>
+                <div class="input-group">
+                    <label for="email">Địa chỉ Email</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" readonly>
+</div>
+                <div class="input-group">
+                    <label for="phone">Số điện thoại</label>
+                    <input type="tel" id="phone" name="phone" value="{{ user.phonenumber}}">
+                </div>
+                <div class="input-group">
+                    <label for="dob">Ngày sinh</label>
+                    <input type="date" id="dob" name="dob">
+                </div>
+                <button class="btn-save" onclick="saveProfile()">Lưu</button>
+            </div>
+        </div>
+
+        <!-- ================= GIỚI THIỆU ================= -->
+        <div id="aboutPage" class="page-content">
+            <div class="starline-header">
+                <button onclick="showPage('accountPage')">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </button>
+            </div>
+            <div class="about-hero">
+                <img src="https://images.unsplash.com/photo-1502920514313-52581002a659"
+                    style="width:100%; display:block; height:180px; object-fit:cover;">
+            </div>
+            <div class="profile-detail-card">
+                <h3><i class="fas fa-info-circle"></i> Giới thiệu về Star Line</h3>
+                <p>
+                    Star Line là nhà cung cấp dịch vụ du lịch quốc tế toàn diện, hỗ trợ 24 ngôn ngữ trên khắp 39 quốc gia và vùng lãnh thổ, cùng với 35 đơn vị tiền tệ địa phương.
+                </p>
+                <p>
+                    Star Line có mạng lưới khách sạn và chuyến bay rộng khắp, với hơn 1,7 triệu khách sạn và chuyến bay từ 600 hãng hàng không, hiện diện ở 3.400 sân bay tại 220 quốc gia và khu vực trên toàn cầu.
+                </p>
+                <p>
+                    Dịch vụ chăm sóc khách hàng đẳng cấp thế giới, đa ngôn ngữ, hoạt động 24/7, cùng các trung tâm hỗ trợ tại Edinburgh, Tokyo và Seoul, giúp "tạo nên trải nghiệm du lịch tốt nhất" cho hàng triệu khách hàng trên khắp thế giới. Để đặt chuyến đi tiếp theo của bạn, hãy truy cập ngay Trip.com.
+                </p>
+                <p>
+                    Với giao diện tối ưu cho thiết bị di động, Star Line mang đến trải nghiệm trực quan, dễ thao tác và phù hợp cho mọi người dùng.
+                </p>
+                <p>
+                    Mục tiêu của chúng tôi là giúp bạn có chuyến đi hoàn hảo với sự thuận tiện, tốc độ và độ tin cậy cao nhất.
+                </p>
+            </div>
+            <div class="profile-detail-card">
+                <h3><i class="fas fa-bullseye"></i> Sứ mệnh</h3>
+<p>Mang đến trải nghiệm du lịch nhanh – an toàn – tiện lợi.</p>
+            </div>
+
+            <div class="profile-detail-card">
+                <h3><i class="fas fa-phone-alt"></i> Liên hệ</h3>
+                <p>Email hỗ trợ: support@starline.com</p>
+                <p>Hotline: 0123 456 789</p>
+            </div>
+
+        </div>
+
+        <!-- ================= ĐÁNH GIÁ ================= -->
+        <div id="ratingPage" class="page-content">
+        <div class="starline-header">
+                <button onclick="showPage('accountPage')">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </button>
+            </div>
+            <div class="profile-detail-card">
+                <h3><i class="fas fa-star"></i> Đánh giá ứng dụng</h3>
+                <p>Chúng tôi rất mong nhận được phản hồi từ bạn để cải thiện dịch vụ.</p>
+                <div class="stars">
+                    <i class="fas fa-star star-item"></i>
+                    <i class="fas fa-star star-item"></i>
+                    <i class="fas fa-star star-item"></i>
+                    <i class="fas fa-star star-item"></i>
+                    <i class="fas fa-star star-item"></i>
+                </div>
+                <textarea id="reviewText" placeholder="Viết phản hồi của bạn..." style="width:100%; margin-top:10px; padding:10px; border-radius:6px; border:1px solid #ccc;"></textarea>
+                <button class="btn-send" onclick="submitRating()" style="margin-top:10px; background-color:var(--secondary-color); color:white; padding:10px 20px; border:none; border-radius:6px; cursor:pointer;">Gửi đánh giá</button>
+            </div>
+            <div class="profile-detail-card" id="ratingSummaryCard"style="display:none;" >
+                <h3><i class="fas fa-chart-line"></i> Tổng quan đánh giá</h3>
+                <p><b>Điểm trung bình:</b> <span id="avgRating">0</span>/5 ⭐</p>
+                <p><b>Tổng lượt đánh giá:</b> <span id="totalRatings">0</span></p>
+            </div>
+            <div class="profile-detail-card" id="ratingListCard"style="display:none;">
+                <h3><i class="fas fa-comments"></i> Danh sách đánh giá</h3>
+                <div id="ratingList"></div>
+            </div>
+        </div>
+
+        <!-- ================= ĐIỀU KHOẢN ================= -->
+        <div id="termsPage" class="page-content">
+            <div class="starline-header">
+                <button onclick="showPage('accountPage')">
+<i class="fas fa-arrow-left"></i> Quay lại
+                </button>
+            </div>
+
+            <div class="profile-detail-card">
+                <h3><i class="fas fa-file-alt"></i> Điều khoản & Điều kiện </h3>
+                <p><strong>Cập nhật vào 19/05/2025</strong></p>
+
+                <h4>1) Về chúng tôi và cách liên hệ với chúng tôi</h4>
+                <p>Star Line (sau đây gọi là “chúng tôi” hoặc “của chúng tôi”) là một website và ứng dụng di động (sau đây gọi là “website”) được điều hành bởi Star Line Travel Singapore Pte. Ltd., công ty trách nhiệm hữu hạn có địa chỉ tại 30 Raffles Place, #29-01 Singapore 048622. Chúng tôi là một đại lý du lịch trực tuyến toàn cầu (giấy phép hoạt động trong lĩnh vực du lịch của Singapore số 02943).</p>
+                <p>Để liên hệ với chúng tôi, bạn vui lòng gửi email hoặc gọi điện thoại cho nhóm chăm sóc khách hàng (qua địa chỉ email và số đường dây trợ giúp trên <a href="https://vn.starline.com/help?locale=vi_vn" target="_blank">https://vn.starline.com/help?locale=vi_vn</a>) hoặc sử dụng dịch vụ Hỗ trợ trực tuyến trên website.</p>
+
+                <h4>2) Về những điều khoản trong văn bản này</h4>
+                <p>Website của chúng tôi hỗ trợ bạn trong việc thu thập thông tin du lịch và xác định tính sẵn có của các sản phẩm và dịch vụ du lịch. Đồng thời bạn cũng có thể đặt vé máy bay, khách sạn, vé tàu, thuê xe, dịch vụ đưa đón sân bay và vé tham quan các địa điểm du lịch (sau đây gọi là “Sản phẩm du lịch”) được cung cấp bởi các nhà cung cấp bên thứ ba (sau đây gọi là “Nhà cung cấp”). Tùy vào quốc gia nơi bạn muốn đặt sản phẩm, Sản phẩm du lịch có thể bao gồm cả vé phà và xe buýt, vé tour du lịch, vé tàu nghỉ dưỡng và vé hành trình du ngoạn. Chúng tôi cũng cung cấp dịch vụ hỗ trợ cho những khách hàng đặt sản phẩm trên website của chúng tôi. Những điều khoản được đề cập đến trong văn bản này là để áp dụng cho các dịch vụ đặt sản phẩm như vậy.</p>
+<p>Khi bạn đặt chỗ cho một Sản phẩm du lịch, yêu cầu đặt chỗ của bạn cũng phải tuân theo các điều khoản và điều kiện của Nhà cung cấp liên quan (ví dụ: điều khoản và điều kiện của hãng hàng không hay của khách sạn), bạn cần phải đọc những nội dung này. Điều này rất quan trọng vì chúng tạo thành một thỏa thuận pháp lý riêng giữa bạn và Nhà cung cấp có liên quan. Vui lòng tham khảo từng phần Sản phẩm du lịch dưới đây để biết thêm chi tiết. Nếu có bất kỳ mâu thuẫn nào giữa điều khoản và điều kiện của Nhà cung cấp với những điều khoản trong văn bản này, thì những điều khoản trong văn bản này sẽ được ưu tiên áp dụng. </p>
+                <p>Mỗi Sản phẩm du lịch có các điều khoản và điều kiện riêng (chẳng hạn như quyền hủy và thay đổi), những điều khoản và điều kiện riêng đó trở thành một phần của những điều khoản trong văn bản này và sẽ được cung cấp cho bạn trong quá trình đặt sản phẩm, vui lòng đọc kỹ trước khi đặt sản phẩm. Những điều khoản này cũng quy định các quy tắc sử dụng website của chúng tôi, bao gồm các tiêu chuẩn về nội dung sẽ được áp dụng khi bạn đăng tải nội dung lên website, liên kết đến website hoặc tương tác với website theo bất kỳ cách nào khác. Bằng cách sử dụng website và/hoặc hoàn thành lệnh đặt chỗ với chúng tôi, bạn xác nhận rằng bạn chấp nhận và đồng ý tuân thủ những điều khoản trong văn bản này cũng như bất kỳ điều khoản và điều kiện nào của Nhà cung cấp có liên quan. Bạn nên đọc kỹ những điều khoản này (đặc biệt là phần trách nhiệm pháp lý ở Mục 10) và in ra một bản để tham khảo sau này. Nếu bạn không hiểu bất cứ điểm nào trong những điều khoản này, xin vui lòng liên hệ với chúng tôi qua thông tin liên hệ ở Mục 1. Nếu không đồng ý với những điều khoản này, vui lòng không sử dụng website của chúng tôi hay hoàn tất lệnh đặt chỗ với chúng tôi.</p>
+<p>Bạn phải đảm bảo rằng bạn có năng lực ký kết hợp đồng ràng buộc về mặt pháp lý (bao gồm việc phải đủ tuổi pháp lý tối thiểu theo yêu cầu của quốc gia của bạn) và bạn sẽ chỉ sử dụng website của chúng tôi để thực hiện lệnh đặt chỗ hợp pháp. Nếu bạn đặt Sản phẩm du lịch cho nhiều cá nhân, người đầu tiên mà bạn nêu tên sẽ chịu trách nhiệm (i) cung cấp thông tin chính xác về các cá nhân còn lại, (ii) thay mặt họ chấp nhận và đảm bảo rằng họ tuân thủ những điều khoản này, (iii) kiểm tra các chi tiết trong xác nhận lệnh đặt chỗ và ngay lập tức liên hệ với chúng tôi nếu có bất kỳ chi tiết nào không chính xác, và (iv) thanh toán toàn bộ giá trị sản phẩm và mọi khoản phí bổ sung liên quan.</p>
+                <p>Thỉnh thoảng, chúng tôi có thể sửa đổi những điều khoản này. Chúng tôi sẽ nêu rõ ngày cập nhật cuối cùng ở phần đầu của những điều khoản trong văn bản này và mọi sửa đổi sẽ có hiệu lực từ ngày công bố. Vui lòng kiểm tra những điều khoản này trước khi sử dụng website của chúng tôi hay hoàn tất lệnh đặt chỗ với chúng tôi để đảm bảo bạn hiểu các điều khoản áp dụng tại thời điểm đó.</p>
+                <p Các tham chiếu đến website này được coi như bao gồm các tham chiếu đến nội dung của website này ở các trang phái sinh, bao gồm nhưng không giới hạn ở website và ứng dụng được liên kết, cho dù bạn truy cập bằng điện thoại di động, máy tính bảng hay thiết bị khác.</p>
+
+                <h4>3) Quy tắc khi sử dụng website của chúng tôi</h4>
+                <p><strong>CHÚNG TÔI CÓ THỂ THAY ĐỔI WEBSITE CỦA MÌNH</strong></p>
+                <p>Website của chúng tôi được cung cấp miễn phí.</p>
+                <p>Chúng tôi không đảm bảo rằng website của chúng tôi hay bất kỳ nội dung nào trên đó sẽ luôn có sẵn hoặc không bị gián đoạn. Chúng tôi có thể tạm dừng, rút lại hoặc hạn chế tính sẵn có của tất cả hoặc bất kỳ phần nào trên website vì lý do kinh doanh và vận hành, trong trường hợp đó chúng tôi sẽ cố gắng đưa ra một thông báo hợp lý cho bạn.</p>
+                <p>Việc cung cấp website của chúng tôi phụ thuộc vào kết nối Internet và các thiết bị. Bạn hoàn toàn hiểu và đồng ý rằng chúng tôi sẽ không chịu trách nhiệm về bất kỳ tổn thất nào của bạn do website của chúng tôi không khả dụng do các sự kiện, hoàn cảnh hoặc nguyên nhân nằm ngoài khả năng kiểm soát hợp lý của chúng tôi, bao gồm nhưng không giới hạn ở internet, hệ thống hoặc thiết bị không ổn định, virus máy tính và các cuộc tấn công của tin tặc.</p>
+<p>Bạn có trách nhiệm cung cấp các thiết bị cần thiết (bao gồm nhưng không giới hạn ở một thiết bị phù hợp và đường truyền internet) và đảm bảo rằng tất cả những người truy cập website của chúng tôi thông qua kết nối internet của bạn đều biết và tuân thủ về những điều khoản này và các điều khoản và điều kiện hiện hành khác.</p>
+
+                <p><strong>THÔNG TIN TÀI KHOẢN CỦA BẠN</strong></p>
+                <p>Bạn đảm bảo rằng tất cả thông tin tài khoản do bạn cung cấp đều đúng, chính xác, cập nhật và đầy đủ.</p>
+                <p>Nếu bạn chọn hoặc được cung cấp mã nhận dạng người dùng, mật khẩu hay bất kỳ thông tin nào khác như một phần quy trình bảo mật của chúng tôi, bạn phải coi đó là thông tin bí mật và không được tiết lộ thông tin đó cho bất kỳ bên thứ ba nào khác. Bạn hoàn toàn hiểu và đồng ý rằng chúng tôi sẽ không chịu trách nhiệm về bất kỳ tổn thất nào mà bạn phải chịu do không coi đó là thông tin bí mật. Nếu chúng tôi có đánh giá hợp lý rằng bạn đã không tuân thủ bất kỳ nội dung nào trong những điều khoản này, chúng tôi có quyền vô hiệu hóa mọi mã nhận dạng người dùng hay mật khẩu nào do bạn chọn hay do chúng tôi cung cấp vào bất cứ lúc nào. Nếu bạn biết hoặc nghi ngờ có người khác ngoài bạn biết mã nhận dạng người dùng hoặc mật khẩu của bạn, bạn phải thông báo ngay cho chúng tôi theo các chi tiết liên hệ ở Mục 1 của văn bản này. Trong tình huống này, nếu bạn đã lưu thông tin về phương thức thanh toán vào tài khoản của mình, bạn cũng sẽ phải liên hệ với nhà cung cấp tài khoản thanh toán của bạn để giảm nhẹ bất kỳ nguy cơ tổn thất nào. Bạn đồng ý hợp tác trong mọi hoạt động kiểm tra cần thiết về chống gian lận hoặc chống rửa tiền mà chúng tôi cần tiến hành. Bạn chịu trách nhiệm đảm bảo an toàn thông tin và mật khẩu liên quan tới Tài khoản cá nhân của mình. Nếu bạn nghi ngờ có lệnh đặt chỗ gian lận hoặc trái phép được thực hiện bằng Phương thức Thanh toán của bạn thông qua nền tảng của chúng tôi, bạn cần liên hệ với bộ phận Dịch vụ Khách hàng của chúng tôi ngay và trong những trường hợp này, chúng tôi sẽ không chịu trách nhiệm.</p>
+                <p><strong>Cách bạn sử dụng tài liệu trên website của chúng tôi</strong></p>
+<p>Chúng tôi là đơn vị sở hữu hoặc có giấy phép của tất cả các bằng sáng chế, bản quyền, nhãn hiệu thương mại, tên doanh nghiệp và tên miền, quyền trong thiết kế, quyền với phần mềm máy tính, quyền với cơ sở dữ liệu và tất cả các quyền sở hữu trí tuệ khác trong mọi trường hợp cho dù đã được đăng ký hay chưa trên website của chúng tôi. Tất cả các quyền này đều được bảo lưu. Bạn có thể in bản sao và tải xuống các trích đoạn của bất kỳ trang nào từ website để dùng cho mục đích cá nhân cũng như có thể lôi kéo sự chú ý của người khác đến nội dung đăng trên website của chúng tôi. Bạn không được tiến hành sửa đổi dưới mọi hình thức với các tài liệu giấy hay bản sao kỹ thuật số của mọi tài liệu nào mà bạn đã in ra hoặc tải xuống, đồng thời bạn không được sử dụng mọi hình minh họa, ảnh chụp, chuỗi video, âm thanh hay đồ họa một cách riêng biệt với phần văn bản đi kèm. Tư cách tác giả của chúng tôi (và của bất kỳ người đóng góp nào được xác định danh tính) đối với nội dung trên website của chúng tôi phải luôn được công nhận. Bạn không được sử dụng bất kỳ nội dung nào trên website với mục đích thương mại khi chưa xin được giấy phép từ chúng tôi hoặc các bên cấp phép của chúng tôi. Nếu bạn in ra, sao chép hoặc tải xuống bất kỳ phần nào trên website của chúng tôi theo cách vi phạm các điều khoản này, quyền sử dụng website của bạn sẽ chấm dứt ngay lập tức và chúng tôi có thể yêu cầu bạn phải trả lại hoặc hủy bất kỳ bản sao nào của tài liệu mà bạn đã tạo ra.</p>
+            </div>
+        </div>
+
+    </div>
+    <script src="../js/admin-users.js"></script>
+    <script>
+    let selectedRating = 0;
+
+    document.querySelectorAll('.star-item').forEach((star, index) => {
+        star.addEventListener('click', () => {
+            selectedRating = index + 1;
+
+            document.querySelectorAll('.star-item').forEach((s, i) => {
+                s.classList.toggle('selected', i < selectedRating);
+            });
+        });
+    });
+
+    async function submitRating() {
+        const message = document.getElementById("reviewText").value.trim();
+        const email = "{{ user.email }}";
+
+        if (selectedRating === 0) {
+            alert("Vui lòng chọn số sao!");
+            return;
+        }
+
+        try {
+            const res = await axios.post("http://localhost:3000/rating", {
+                userEmail: email,
+                rating: selectedRating,
+                message: message
+            });
+
+            alert("Gửi đánh giá thành công!");
+
+            // ✅ TỰ ĐỘNG XÓA DỮ LIỆU TRÊN GIAO DIỆN SAU KHI GỬI
+            selectedRating = 0;
+            document.getElementById("reviewText").value = "";
+document.querySelectorAll('.star-item').forEach(s => {
+                s.classList.remove('selected');
+            });
+
+            // Cập nhật lại danh sách đánh giá
+            loadRatings();
+            showPage('accountPage'); 
+            document.getElementById("ratingSummaryCard").style.display = "block";
+            document.getElementById("ratingListCard").style.display = "block";
+            } catch (err) {
+            console.error(err);
+            alert("Có lỗi xảy ra khi gửi đánh giá!");
+            }
+    }
+
+    async function loadRatings() {
+        try {
+            const res = await axios.get("http://localhost:3000/rating/list");
+            const data = res.data;
+
+            document.getElementById("avgRating").innerText = data.average.toFixed(1);
+            document.getElementById("totalRatings").innerText = data.total;
+
+            const listDiv = document.getElementById("ratingList");
+            listDiv.innerHTML = "";
+
+            data.list.forEach(item => {
+                const el = document.createElement("div");
+                el.className = "rating-item";
+                el.innerHTML = `
+                    <div class="rating-stars">${"⭐".repeat(item.rating)}</div>
+                    <div class="rating-text">${item.message || "<i>Không có bình luận</i>"}</div>
+                    <div style="font-size:12px;color:#888">${item.userEmail}</div>
+                `;
+                listDiv.appendChild(el);
+            });
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    function showSupportPage(){
+    showPage('supportPage');
+}
+    </script>
+
+
+</body>
+</html>
+
+</body>
+</html>

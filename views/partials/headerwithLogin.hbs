@@ -1,0 +1,85 @@
+<style>
+    .nav1 {
+  background: linear-gradient(
+    90deg,
+    #cdefff 0%,
+    #eaf6ff 50%,
+    #ffffff 100%
+  );
+}
+</style>
+<nav class="nav-bar fixed-top navbar-expand-lg navbar-light bg-light p-2 d-lg-block d-sm-none nav1 ">
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="left-section col-4 d-flex justify-content-start">
+            <div id="underline-navbar" class="row d-flex justify-content-center align-items-center pt-3"
+                style="font-size: 17px;">
+                <div class="col-4 text-center p-0">
+                    <div class="container m-0 px-0">
+                        <a class="nav-link active icon pe-0" aria-current="page" href="/">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            Trang chủ
+                        </a>
+                    </div>
+                </div>
+                <div class="col-4 text-center p-0">
+                    <div class="container m-0 px-0">
+                        <a class="nav-link active icon pe-0" aria-current="page" href="/ticket-list">
+                            <i class="fa fa-plane" aria-hidden="true"></i>
+                            Chuyến bay
+                        </a>
+                    </div>
+                </div>
+                <div class="col-4 text-center p-0">
+    <div class="container m-0 px-0">
+        <a class="nav-link" href="/search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Tra cứu
+        </a>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="middle-section col-4 text-center">
+            <a href=""><img src="/img/logo-navbar.png" alt="Logo"></a>
+        </div>
+        <div class="right-section col-4 d-flex">
+            <div class="container-fluid d-flex align-items-center justify-content-end">
+                {{#if user.picture}}
+                    <img class="avt" src="{{user.picture}}" alt="User" style="height: 40px; width:40px; border-radius: 20px; margin-right: 5px">
+                    {{else}}
+                         <img class="avt" src="/img/userlogo.png" alt="User" style="height: 50px; width:50px">
+                {{/if}}
+                <div class="username">{{user.last_name}} {{user.first_name}}  </div>
+                <a class="ms-2 nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false"></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/account">Hồ sơ</a></li>
+                    <form action="/logout" method="post">
+                        <li><button type="submit" name="logout" class="dropdown-item class">Đăng xuất</button></li>
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light p-3 d-sm-block d-lg-none nav2">
+<div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="/client/images/navbar/logo-navbar.png" alt="Logo"></a>
+        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav align-items-end">
+                <a class="nav-link" aria-current="page" href="/">Trang chủ</a>
+                <a class="nav-link " href="#">Hồ sơ</a>
+                <a class="nav-link" href="#">Cài đặt</a>
+                <form action="/logout" method="post">
+                    <button type="submit" name="logout" class="nav-link logout">Đăng xuất</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>

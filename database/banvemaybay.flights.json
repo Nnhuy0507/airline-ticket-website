@@ -1,0 +1,325 @@
+[{
+  "_id": {
+    "$oid": "f7fd001f826cfad7d78d0c24"
+  },
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 09:00:00",
+  "arrival_datetime": "2024-12-25 11:00:00",
+  "economy_price": "1493000",
+  "business_price": "3253000",
+  "airline_id": "51908cc42f9fa364220cb649",
+  "flight_id": 1
+},
+{
+  "_id": {
+    "$oid": "35025bddb98e783fea925244"
+  },
+  "flight_id": 2,
+  "airline_id": "d83aa0756732d975dffbc109",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 10:00:00",
+  "arrival_datetime": "2024-12-25 12:00:00",
+  "economy_price": "969000",
+  "business_price": "2637000"
+},
+{
+  "_id": {
+    "$oid": "a8deb9fa0458c8b21e89be8f"
+  },
+  "flight_id": 3,
+  "airline_id": "9f094d248b12325fa7743f29",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 11:00:00",
+  "arrival_datetime": "2024-12-25 13:00:00",
+  "economy_price": "812000",
+  "business_price": "1925000"
+},
+{
+  "_id": {
+    "$oid": "5faaf4515d0842b55f73f6ab"
+  },
+  "flight_id": 4,
+  "airline_id": "582857409a28e0e18829e880",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 12:00:00",
+  "arrival_datetime": "2024-12-25 14:00:00",
+  "economy_price": "1099000",
+  "business_price": "2617000"
+},
+{
+  "_id": {
+    "$oid": "1350c70f18cee3b8281f77df"
+  },
+  "flight_id": 5,
+  "airline_id": "10ae183c37e61e4ebf7b84a3",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 13:00:00",
+  "arrival_datetime": "2024-12-25 20:20:00",
+  "economy_price": "973000",
+  "business_price": "2297000"
+},
+{
+  "_id": {
+    "$oid": "72fbad874c5acc7a07997842"
+  },
+  "flight_id": 6,
+  "airline_id": "10ae183c37e61e4ebf7b84a3",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 13:00:00",
+  "arrival_datetime": "2024-12-25 20:20:00",
+  "economy_price": "842000",
+  "business_price": "2183000"
+},
+{
+  "_id": {
+    "$oid": "86c22d5f8dd12687a2b83dfc"
+  },
+  "flight_id": 7,
+  "airline_id": "9f094d248b12325fa7743f29",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 13:00:00",
+  "arrival_datetime": "2024-12-25 20:20:00",
+  "economy_price": "1008000",
+  "business_price": "2299000"
+},
+{
+  "_id": {
+    "$oid": "e46a8d04435315a0bdd89356"
+  },
+  "flight_id": 8,
+  "airline_id": "9f094d248b12325fa7743f29",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 11:00:00",
+  "arrival_datetime": "2024-12-25 13:00:00",
+  "economy_price": "822000",
+  "business_price": "2130000"
+},
+{
+  "_id": {
+    "$oid": "82a60c76accce2ac9349ba61"
+  },
+  "flight_id": 9,
+  "airline_id": "582857409a28e0e18829e880",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 12:00:00",
+  "arrival_datetime": "2024-12-25 14:00:00",
+  "economy_price": "1181000",
+  "business_price": "2483000"
+},
+{
+  "_id": {
+    "$oid": "ff1cfe37db569e1669c17f18"
+  },
+  "flight_id": 10,
+  "airline_id": "10ae183c37e61e4ebf7b84a3",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-25 13:00:00",
+  "arrival_datetime": "2024-12-25 15:00:00",
+  "economy_price": "995000",
+  "business_price": "2230000"
+},
+[{
+  "_id": {
+    "$oid": "d7f9e001f826cfad7d78d1c24"
+  },
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-26 09:00:00",
+  "arrival_datetime": "2024-12-26 11:00:00",
+  "economy_price": "1500000",
+  "business_price": "3300000",
+  "airline_id": "51908cc42f9fa364220cb649",
+  "flight_id": 11
+},
+{
+  "_id": {
+    "$oid": "a1025bddb98e783fea926244"
+  },
+  "flight_id": 12,
+  "airline_id": "d83aa0756732d975dffbc109",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-26 10:00:00",
+  "arrival_datetime": "2024-12-26 12:00:00",
+  "economy_price": "980000",
+  "business_price": "2700000"
+},
+{
+  "_id": {
+    "$oid": "b2deb9fa0458c8b21e89be9f"
+  },
+  "flight_id": 13,
+  "airline_id": "9f094d248b12325fa7743f29",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-26 11:00:00",
+  "arrival_datetime": "2024-12-26 13:00:00",
+  "economy_price": "820000",
+  "business_price": "1950000"
+},
+{
+  "_id": {
+    "$oid": "c3faf4515d0842b55f73f7ab"
+  },
+  "flight_id": 14,
+  "airline_id": "582857409a28e0e18829e880",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-26 12:00:00",
+  "arrival_datetime": "2024-12-26 14:00:00",
+  "economy_price": "1120000",
+  "business_price": "2650000"
+},
+{
+  "_id": {
+    "$oid": "d450c70f18cee3b8281f88df"
+  },
+  "flight_id": 15,
+  "airline_id": "10ae183c37e61e4ebf7b84a3",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-26 13:00:00",
+  "arrival_datetime": "2024-12-26 15:00:00",
+  "economy_price": "985000",
+  "business_price": "2300000"
+},
+{
+  "_id": {
+    "$oid": "e72fbad874c5acc7a0799787"
+  },
+  "flight_id": 16,
+  "airline_id": "10ae183c37e61e4ebf7b84a3",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-27 09:00:00",
+  "arrival_datetime": "2024-12-27 11:00:00",
+  "economy_price": "850000",
+  "business_price": "2200000"
+},
+{
+  "_id": {
+    "$oid": "f8c22d5f8dd12687a2b84dfd"
+  },
+  "flight_id": 17,
+  "airline_id": "9f094d248b12325fa7743f29",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-27 10:00:00",
+  "arrival_datetime": "2024-12-27 12:00:00",
+  "economy_price": "1050000",
+  "business_price": "2350000"
+},
+{
+  "_id": {
+    "$oid": "g46a8d04435315a0bdd89358"
+  },
+  "flight_id": 18,
+  "airline_id": "9f094d248b12325fa7743f29",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-27 11:00:00",
+  "arrival_datetime": "2024-12-27 13:00:00",
+  "economy_price": "870000",
+  "business_price": "2250000"
+},
+{
+  "_id": {
+    "$oid": "h82a60c76accce2ac9349ba62"
+  },
+  "flight_id": 19,
+  "airline_id": "582857409a28e0e18829e880",
+  "departure_airport_id": {
+    "$oid": "260373add95d75ddc8845dc8"
+  },
+  "arrival_airport_id": {
+    "$oid": "90f4c42746bc707266a49529"
+  },
+  "departure_datetime": "2024-12-27 12:00:00",
+  "arrival_datetime": "2024-12-27 14:00:00",
+  "economy_price": "1200000",
+  "business_price": "2500000"
+}]
+
+]

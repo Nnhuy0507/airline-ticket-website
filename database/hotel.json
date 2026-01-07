@@ -1,0 +1,39 @@
+[
+    {
+        "name": "Khách sạn Rex Sài Gòn",
+        "city": "Ho Chi Minh",
+        "address": "141 Nguyễn Huệ, Quận 1",
+        "description": "Khách sạn 5 sao mang tính lịch sử, tọa lạc tại trung tâm.",
+        "rating": 5,
+        "score": 8.9,
+        "reviews": 1500,
+        "price": 75.50,
+        "imageURL": "/img/airlines/HCM/ksan_rex.jpg",
+        "amenities": ["Hồ bơi", "Spa", "Bar Rooftop"]
+    },
+    {
+        "name": "Khách sạn Caravelle Saigon",
+        "city": "Ho Chi Minh",
+        "address": "19-23 Lam Son Square, Quận 1",
+        "description": "Khách sạn Caravelle Saigon là khách sạn đạt tiêu chuẩn quốc tế 5 sao hàng đầu tọa lạc ngay tại trung tâm tài chính, thương mại và giải trí sầm uất.",
+        "rating": 4.9,
+        "score": 8.7,
+        "reviews": 1300,
+        "price": 300000,
+        "imageURL": "/img/airlines/HCM/ksan_careavelle.jpeg",
+        "amenities": ["Executive Lounge", "Fitness", "Nhà hàng"]
+    },
+    {
+        "name": "Chợ Bến Thành",
+        "city": "Ho Chi Minh",
+        "address": "Nằm bên cạnh quảng trường Quách Thị Trang và công viên 23 Tháng 9, thuộc địa bàn quận 1, thành phố Hồ Chí Minh.",
+        "description": "Chợ có 4 ô cửa và 4 tháp cổng có gắn đồng hồ nhìn ra 4 con đường chính của trung tâm quận 1",
+        "rating": 4.0,
+        "score": 9.0,
+        "reviews": 2000,
+        "price": 1,
+        "imageURL": "/img/airlines/HCM/cho_ben_thanh.jpeg",
+        "amenities": ["Executive Lounge", "Fitness", "Nhà hàng"]
+    }
+    
+]
